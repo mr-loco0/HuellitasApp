@@ -1,0 +1,5 @@
+com\huellitas\dao\ProductoDAO.class
+com\huellitas\model\Producto.class
+com\huellitas\config\ConexionBD.class
+com\huellitas\view\FormProductos.class
+com\mycompany\huellitasapp\HuellitasApp.class
