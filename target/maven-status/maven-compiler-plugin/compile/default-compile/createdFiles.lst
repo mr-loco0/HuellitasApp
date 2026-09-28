@@ -1,5 +1,13 @@
-com\huellitas\dao\ProductoDAO.class
+com\huellitas\view\FormCliente$1.class
 com\huellitas\model\Producto.class
-com\huellitas\config\ConexionBD.class
+com\huellitas\view\FormMascota.class
 com\huellitas\view\FormProductos.class
+com\huellitas\view\FormCliente.class
+com\huellitas\view\FormMascota$1.class
 com\mycompany\huellitasapp\HuellitasApp.class
+com\huellitas\config\ConexionBD.class
+com\huellitas\model\Mascota.class
+com\huellitas\model\Cliente.class
+com\huellitas\dao\ClienteDAO.class
+com\huellitas\dao\ProductoDAO.class
+com\huellitas\dao\MascotaDAO.class

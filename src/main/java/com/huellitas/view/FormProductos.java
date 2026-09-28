@@ -43,6 +43,8 @@ public class FormProductos extends javax.swing.JFrame {
         guardarBtn = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         productosTbl = new javax.swing.JTable();
+        Eliminarbtn = new javax.swing.JButton();
+        Modificarbtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,15 +78,20 @@ public class FormProductos extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(productosTbl);
 
+        Eliminarbtn.setText("Eliminar");
+        Eliminarbtn.addActionListener(this::EliminarbtnActionPerformed);
+
+        Modificarbtn.setText("Modificar");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 422, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(codigoLb, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(stockLb, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -104,7 +111,12 @@ public class FormProductos extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(nombreTF, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(codigoTF, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(Eliminarbtn)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(Modificarbtn)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -133,7 +145,11 @@ public class FormProductos extends javax.swing.JFrame {
                     .addComponent(guardarBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(Eliminarbtn)
+                    .addComponent(Modificarbtn))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pack();
@@ -179,6 +195,38 @@ public class FormProductos extends javax.swing.JFrame {
     private void codigoTFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_codigoTFActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_codigoTFActionPerformed
+
+    private void EliminarbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EliminarbtnActionPerformed
+        // TODO add your handling code here:                                            
+    int fila = productosTbl.getSelectedRow();
+    
+    if (fila == -1) {
+        javax.swing.JOptionPane.showMessageDialog(this, "Por favor, selecciona un producto de la tabla para eliminar.");
+        return;
+    }
+    
+    int idProducto = Integer.parseInt(productosTbl.getValueAt(fila, 0).toString());
+    String nombre = productosTbl.getValueAt(fila, 2).toString(); // Ajusta el índice según tu columna de nombre
+    
+    int confirmacion = javax.swing.JOptionPane.showConfirmDialog(
+        this, 
+        "¿Estás seguro de eliminar el producto: " + nombre + "?", 
+        "Confirmar eliminación", 
+        javax.swing.JOptionPane.YES_NO_OPTION
+    );
+    
+    if (confirmacion == javax.swing.JOptionPane.YES_OPTION) {
+        com.huellitas.dao.ProductoDAO dao = new com.huellitas.dao.ProductoDAO();
+        if (dao.eliminar(idProducto)) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Producto eliminado correctamente.");
+            listarProductos();
+            limpiarCampos();
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar el producto.");
+        }
+    }
+
+    }//GEN-LAST:event_EliminarbtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -247,6 +295,8 @@ private void limpiarCampos() {
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Eliminarbtn;
+    private javax.swing.JButton Modificarbtn;
     private javax.swing.JLabel codigoLb;
     private javax.swing.JTextField codigoTF;
     private javax.swing.JButton guardarBtn;

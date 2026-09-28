@@ -62,4 +62,43 @@ public class ProductoDAO {
         }
         return lista;
     }
+    // Método para ELIMINAR un producto por su ID
+public boolean eliminar(int idProducto) {
+    String sql = "DELETE FROM productos WHERE id_producto = ?";
+    
+    try (Connection cn = ConexionBD.getConexion();
+         PreparedStatement ps = cn.prepareStatement(sql)) {
+        
+        ps.setInt(1, idProducto);
+        ps.executeUpdate();
+        return true;
+        
+    } catch (SQLException e) {
+        System.err.println("Error al eliminar producto: " + e.getMessage());
+        return false;
+    }
+}
+
+// Método para MODIFICAR / ACTUALIZAR un producto existente
+public boolean modificar(Producto p) {
+    String sql = "UPDATE productos SET codigo=?, nombre=?, stock=?, stock_minimo=?, precio=? WHERE id_producto=?";
+    
+    try (Connection cn = ConexionBD.getConexion();
+         PreparedStatement ps = cn.prepareStatement(sql)) {
+        
+        ps.setString(1, p.getCodigo());
+        ps.setString(2, p.getNombre());
+        ps.setInt(3, p.getStock());
+        ps.setInt(4, p.getStockMinimo());
+        ps.setDouble(5, p.getPrecio());
+        ps.setInt(6, p.getIdProducto());
+        
+        ps.executeUpdate();
+        return true;
+        
+    } catch (SQLException e) {
+        System.err.println("Error al modificar producto: " + e.getMessage());
+        return false;
+    }
+}
 }
